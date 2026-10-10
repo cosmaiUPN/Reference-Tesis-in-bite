@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Referencias · Segmentación de filamentos solares (MAGFiLO)</title>
+<meta name="description" content="Bibliografía y recursos del proyecto de segmentación de filamentos solares con U-Net sobre el dataset MAGFiLO.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>☀️</text></svg>">
+<style>
+  :root{
+    --bg:#fbfaf7; --surface:#ffffff; --text:#1c2230; --muted:#5d6678; --line:#e6e2d8;
+    --accent:#c2570c; --accent-soft:#fdeedd; --chip:#f1eee6; --code:#f5f2ea;
+    --shadow:0 1px 2px rgba(20,25,40,.06),0 4px 14px rgba(20,25,40,.04);
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --bg:#0e1320; --surface:#151b2b; --text:#e8ebf3; --muted:#9aa4b8; --line:#26304a;
+      --accent:#ffa94d; --accent-soft:#2b2318; --chip:#1d2538; --code:#0f1524;
+      --shadow:0 1px 2px rgba(0,0,0,.4);
+    }
+  }
+  :root[data-theme="dark"]{
+    --bg:#0e1320; --surface:#151b2b; --text:#e8ebf3; --muted:#9aa4b8; --line:#26304a;
+    --accent:#ffa94d; --accent-soft:#2b2318; --chip:#1d2538; --code:#0f1524;
+    --shadow:0 1px 2px rgba(0,0,0,.4);
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{margin:0;background:var(--bg);color:var(--text);
+    font:16px/1.6 system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif}
+  a{color:var(--accent);text-decoration:none} a:hover{text-decoration:underline}
+  .wrap{max-width:920px;margin:0 auto;padding:0 20px}
+  header.hero{padding:56px 0 28px;border-bottom:1px solid var(--line);
+    background:radial-gradient(900px 260px at 85% -40%,var(--accent-soft),transparent 70%)}
+  .topbar{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:26px}
+  .kicker{font-size:.8rem;letter-spacing:.12em;text-transform:uppercase;color:var(--accent);font-weight:700}
+  h1{font-size:clamp(1.8rem,4.5vw,2.6rem);line-height:1.15;margin:.2em 0 .4em;letter-spacing:-.02em}
+  .lead{color:var(--muted);max-width:62ch;margin:0}
+  button,.btn{font:inherit;cursor:pointer}
+  .icon-btn{background:var(--surface);color:var(--text);border:1px solid var(--line);
+    border-radius:10px;padding:6px 12px;font-size:.85rem}
+  .icon-btn:hover{border-color:var(--accent)}
+  .stats{display:flex;flex-wrap:wrap;gap:10px;margin-top:22px}
+  .stat{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:10px 16px;box-shadow:var(--shadow)}
+  .stat b{display:block;font-size:1.3rem;line-height:1.2}
+  .stat span{font-size:.78rem;color:var(--muted)}
+  section{padding:34px 0 6px}
+  h2{font-size:1.35rem;margin:0 0 14px;letter-spacing:-.01em}
+  .pipeline{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:10px;padding:0;margin:0;list-style:none;counter-reset:s}
+  .pipeline li{counter-increment:s;background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:12px 14px;font-size:.9rem;box-shadow:var(--shadow)}
+  .pipeline li::before{content:counter(s);display:inline-grid;place-items:center;width:22px;height:22px;border-radius:50%;
+    background:var(--accent);color:#fff;font-size:.75rem;font-weight:700;margin-right:8px}
+  .pipeline small{display:block;color:var(--muted);margin-top:3px}
+  .controls{position:sticky;top:0;z-index:5;background:var(--bg);padding:12px 0;border-bottom:1px solid var(--line);margin-top:18px}
+  .search{width:100%;padding:10px 14px;border-radius:10px;border:1px solid var(--line);background:var(--surface);color:var(--text);font:inherit}
+  .search:focus{outline:2px solid var(--accent);outline-offset:1px}
+  .chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}
+  .chip{background:var(--chip);border:1px solid transparent;color:var(--text);border-radius:999px;padding:4px 12px;font-size:.82rem}
+  .chip[aria-pressed="true"]{background:var(--accent);color:#fff}
+  .toolbar{display:flex;justify-content:space-between;align-items:center;margin:14px 0 0;color:var(--muted);font-size:.85rem;gap:10px;flex-wrap:wrap}
+  .cat{margin-top:26px}
+  .cat h3{font-size:1.02rem;margin:0 0 4px;display:flex;align-items:center;gap:8px}
+  .cat p.desc{margin:0 0 10px;color:var(--muted);font-size:.9rem}
+  .ref{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:14px 16px;margin-bottom:10px;box-shadow:var(--shadow)}
+  .ref .title{font-weight:650}
+  .ref .meta{color:var(--muted);font-size:.9rem;margin-top:2px}
+  .ref .use{margin-top:8px;font-size:.84rem}
+  .tag{display:inline-block;background:var(--accent-soft);color:var(--accent);border-radius:6px;padding:1px 8px;font-size:.76rem;font-weight:600;margin-right:6px}
+  .actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
+  .actions a,.actions button{font-size:.8rem;border:1px solid var(--line);background:transparent;color:var(--text);
+    border-radius:8px;padding:3px 10px}
+  .actions a:hover,.actions button:hover{border-color:var(--accent);text-decoration:none;color:var(--accent)}
+  pre.bib{display:none;margin:10px 0 0;background:var(--code);border:1px solid var(--line);border-radius:8px;padding:10px 12px;
+    font:.78rem/1.5 ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;overflow-x:auto;white-space:pre}
+  .ref.open pre.bib{display:block}
+  .empty{display:none;text-align:center;color:var(--muted);padding:36px 0}
+  footer{margin:50px 0 40px;padding-top:18px;border-top:1px solid var(--line);color:var(--muted);font-size:.85rem}
+  .note{border-left:3px solid var(--accent);background:var(--surface);border-radius:0 10px 10px 0;padding:10px 14px;font-size:.88rem;color:var(--muted)}
+  @media print{.controls,.topbar .icon-btn,.actions{display:none}.ref{box-shadow:none;break-inside:avoid}}
+</style>
+</head>
+<body>
+<header class="hero">
+  <div class="wrap">
+    <div class="topbar">
+      <span class="kicker">Heliofísica · Visión por computador</span>
+      <button class="icon-btn" id="theme" aria-label="Cambiar tema">🌓 Tema</button>
+    </div>
+    <h1>Referencias del proyecto<br>Segmentación de filamentos solares</h1>
+    <p class="lead">Bibliografía, datos y herramientas detrás de nuestro pipeline de segmentación con U-Net sobre
+      imágenes H-alpha de GONG (dataset MAGFiLO), desarrollado para el IEEE Big Data Cup 2026 / Kaggle.</p>
+    <div class="stats" id="stats"></div>
+  </div>
+</header>
+
+<main class="wrap">
+  <section>
+    <h2>Pipeline del proyecto</h2>
+    <ol class="pipeline">
+      <li>Anotaciones COCO → máscaras<small>pycocotools · OpenCV</small></li>
+      <li>Dataset y aumentos<small>Albumentations · ImageNet</small></li>
+      <li>U-Net + encoder ResNet<small>segmentation_models.pytorch</small></li>
+      <li>Pérdida BCE + Dice<small>Dice, V-Net, Sudre et al.</small></li>
+      <li>Entrenamiento<small>Adam · mixed precision · PyTorch</small></li>
+      <li>Evaluación y umbral<small>Dice · IoU (Jaccard)</small></li>
+    </ol>
+  </section>
+
+  <div class="controls">
+    <input class="search" id="q" type="search" placeholder="Buscar por autor, título, año, palabra clave…" aria-label="Buscar referencias">
+    <div class="chips" id="chips" role="group" aria-label="Filtrar por categoría"></div>
+    <div class="toolbar">
+      <span id="count"></span>
+      <span>
+        <button class="icon-btn" id="copyAll">Copiar todo en BibTeX</button>
+        <button class="icon-btn" id="dlAll">Descargar .bib</button>
+      </span>
+    </div>
+  </div>
+
+  <div id="list"></div>
+  <p class="empty" id="empty">Ninguna referencia coincide con la búsqueda.</p>
+
+  <footer>
+    <p class="note">Esta lista cubre las fuentes que sustentan el pipeline actual. Los DOIs y enlaces arXiv se incluyen para verificar cada
+      referencia; se recomienda comprobar los detalles de edición antes de usarlas en un artículo.</p>
+    <p>Última actualización: 9 de octubre de 2026.</p>
+  </footer>
+</main>
+
+<script>
+const CATS = {
+  data:  {name:"Datos y competencia", desc:"Dataset MAGFiLO, instrumento GONG y el reto de segmentación."},
+  arch:  {name:"Arquitecturas", desc:"Modelos de segmentación y backbones evaluados o previstos."},
+  loss:  {name:"Funciones de pérdida y métricas", desc:"Cómo se optimiza y se mide la calidad de la máscara."},
+  train: {name:"Entrenamiento", desc:"Optimización, precisión mixta y marco de deep learning."},
+  tools: {name:"Herramientas y librerías", desc:"Software usado en el notebook."}
+};
+
+const REFS = [
+ // ---------- DATOS ----------
+ {id:"ahmadzadeh2024magfilo",cat:"data",type:"article",
+  authors:["Ahmadzadeh, Azim","Adhyapak, Rohan","Chaurasiya, Kartik","Nagubandi, Laxmi Alekhya","Aparna, V.","Martens, Petrus C.","Pevtsov, Alexei","Bertello, Luca","Pevtsov, Alexander","Douglas, Naomi","McDonald, Samuel","Bawa, Apaar","Kang, Eugene","Wu, Riley","Kempton, Dustin J.","Abdelkarem, Aya","Copeland, Patrick M.","Seelamneni, Sri Harsha"],
+  year:2024,title:"A dataset of manually annotated filaments from H-alpha observations",
+  venue:"Scientific Data",vol:"11",
+  doi:"10.1038/s41597-024-03876-y",url:"https://doi.org/10.1038/s41597-024-03876-y",
+  use:"Dataset base: 10 244 filamentos anotados en 1 593 observaciones GONG (2011–2022).",where:"Secciones 2–4"},
+ {id:"mlecofi2024magfilo",cat:"data",type:"misc",
+  authors:["MLEcoFi Project"],year:2024,title:"MAGFiLO: Manually Annotated GONG Filaments in H-Alpha Observations",
+  venue:"Sitio web del proyecto MLEcoFi (NSF / NSO)",url:"https://www.mlecofi.net/magfilo",
+  use:"Página oficial de descarga y documentación del dataset.",where:"Sección 1"},
+ {id:"ieee2026filament",cat:"data",type:"misc",
+  authors:["IEEE Big Data 2026"],year:2026,title:"Big Data Cup 2026: Pixel-Precise Segmentation of Solar Filaments",
+  venue:"IEEE International Conference on Big Data",url:"https://bigdataieee.org/BigData2026/cup/solar-filament-segmentation/",
+  use:"Descripción oficial del reto, objetivos y contexto científico.",where:"Contexto"},
+ {id:"harvey1996gong",cat:"data",type:"article",
+  authors:["Harvey, J. W.","others"],year:1996,title:"The Global Oscillation Network Group (GONG) Project",
+  venue:"Science",vol:"272(5266)",pages:"1284–1286",doi:"10.1126/science.272.5266.1284",url:"https://doi.org/10.1126/science.272.5266.1284",
+  use:"Red de observatorios que produce las imágenes H-alpha.",where:"Contexto"},
+ {id:"lin2014coco",cat:"data",type:"inproceedings",
+  authors:["Lin, Tsung-Yi","Maire, Michael","Belongie, Serge","Hays, James","Perona, Pietro","Ramanan, Deva","Dollár, Piotr","Zitnick, C. Lawrence"],
+  year:2014,title:"Microsoft COCO: Common Objects in Context",venue:"European Conference on Computer Vision (ECCV)",pages:"740–755",
+  url:"https://arxiv.org/abs/1405.0312",arxiv:"1405.0312",
+  use:"Formato de anotación JSON (polígonos / RLE) del que se generan las máscaras.",where:"Sección 3"},
+
+ // ---------- ARQUITECTURAS ----------
+ {id:"ronneberger2015unet",cat:"arch",type:"inproceedings",
+  authors:["Ronneberger, Olaf","Fischer, Philipp","Brox, Thomas"],year:2015,
+  title:"U-Net: Convolutional Networks for Biomedical Image Segmentation",
+  venue:"Medical Image Computing and Computer-Assisted Intervention (MICCAI)",pages:"234–241",
+  doi:"10.1007/978-3-319-24574-4_28",url:"https://arxiv.org/abs/1505.04597",arxiv:"1505.04597",
+  use:"Arquitectura codificador–decodificador con conexiones de salto usada como modelo base.",where:"Sección 7"},
+ {id:"he2016resnet",cat:"arch",type:"inproceedings",
+  authors:["He, Kaiming","Zhang, Xiangyu","Ren, Shaoqing","Sun, Jian"],year:2016,
+  title:"Deep Residual Learning for Image Recognition",venue:"IEEE Conference on Computer Vision and Pattern Recognition (CVPR)",pages:"770–778",
+  url:"https://arxiv.org/abs/1512.03385",arxiv:"1512.03385",
+  use:"Encoder ResNet-50 / ResNet-34 de la U-Net.",where:"Sección 7"},
+ {id:"deng2009imagenet",cat:"arch",type:"inproceedings",
+  authors:["Deng, Jia","Dong, Wei","Socher, Richard","Li, Li-Jia","Li, Kai","Fei-Fei, Li"],year:2009,
+  title:"ImageNet: A large-scale hierarchical image database",venue:"IEEE CVPR",pages:"248–255",
+  doi:"10.1109/CVPR.2009.5206848",url:"https://doi.org/10.1109/CVPR.2009.5206848",
+  use:"Pesos preentrenados y estadísticas de normalización (media/desviación) del encoder.",where:"Secciones 6–7"},
+ {id:"zhou2018unetpp",cat:"arch",type:"inproceedings",
+  authors:["Zhou, Zongwei","Rahman Siddiquee, Md Mahfuzur","Tajbakhsh, Nima","Liang, Jianming"],year:2018,
+  title:"UNet++: A Nested U-Net Architecture for Medical Image Segmentation",venue:"Deep Learning in Medical Image Analysis (DLMIA)",
+  url:"https://arxiv.org/abs/1807.10165",arxiv:"1807.10165",
+  use:"Alternativa planteada como siguiente paso (UnetPlusPlus).",where:"Próximos pasos"},
+ {id:"lin2017fpn",cat:"arch",type:"inproceedings",
+  authors:["Lin, Tsung-Yi","Dollár, Piotr","Girshick, Ross","He, Kaiming","Hariharan, Bharath","Belongie, Serge"],year:2017,
+  title:"Feature Pyramid Networks for Object Detection",venue:"IEEE CVPR",pages:"2117–2125",
+  url:"https://arxiv.org/abs/1612.03144",arxiv:"1612.03144",
+  use:"Arquitectura FPN, candidata a comparar.",where:"Próximos pasos"},
+ {id:"chen2018deeplabv3plus",cat:"arch",type:"inproceedings",
+  authors:["Chen, Liang-Chieh","Zhu, Yukun","Papandreou, George","Schroff, Florian","Adam, Hartwig"],year:2018,
+  title:"Encoder-Decoder with Atrous Separable Convolution for Semantic Image Segmentation",venue:"European Conference on Computer Vision (ECCV)",pages:"833–851",
+  url:"https://arxiv.org/abs/1802.02611",arxiv:"1802.02611",
+  use:"DeepLabV3+, candidata a comparar.",where:"Próximos pasos"},
+ {id:"tan2019efficientnet",cat:"arch",type:"inproceedings",
+  authors:["Tan, Mingxing","Le, Quoc V."],year:2019,
+  title:"EfficientNet: Rethinking Model Scaling for Convolutional Neural Networks",venue:"International Conference on Machine Learning (ICML)",pages:"6105–6114",
+  url:"https://arxiv.org/abs/1905.11946",arxiv:"1905.11946",
+  use:"Encoder ligero alternativo para la GPU limitada de Kaggle.",where:"Próximos pasos"},
+
+ // ---------- PÉRDIDAS Y MÉTRICAS ----------
+ {id:"milletari2016vnet",cat:"loss",type:"inproceedings",
+  authors:["Milletari, Fausto","Navab, Nassir","Ahmadi, Seyed-Ahmad"],year:2016,
+  title:"V-Net: Fully Convolutional Neural Networks for Volumetric Medical Image Segmentation",venue:"International Conference on 3D Vision (3DV)",pages:"565–571",
+  doi:"10.1109/3DV.2016.79",url:"https://arxiv.org/abs/1606.04797",arxiv:"1606.04797",
+  use:"Introduce la pérdida Dice para segmentación con fuerte desbalance de clases.",where:"Sección 8"},
+ {id:"sudre2017generalised",cat:"loss",type:"inproceedings",
+  authors:["Sudre, Carole H.","Li, Wenqi","Vercauteren, Tom","Ourselin, Sebastien","Cardoso, M. Jorge"],year:2017,
+  title:"Generalised Dice Overlap as a Deep Learning Loss Function for Highly Unbalanced Segmentations",venue:"DLMIA / ML-CDS",
+  url:"https://arxiv.org/abs/1707.03237",arxiv:"1707.03237",
+  use:"Justificación de Dice en máscaras con poca área positiva (filamentos finos).",where:"Sección 8"},
+ {id:"lin2017focal",cat:"loss",type:"inproceedings",
+  authors:["Lin, Tsung-Yi","Goyal, Priya","Girshick, Ross","He, Kaiming","Dollár, Piotr"],year:2017,
+  title:"Focal Loss for Dense Object Detection",venue:"IEEE International Conference on Computer Vision (ICCV)",pages:"2980–2988",
+  url:"https://arxiv.org/abs/1708.02002",arxiv:"1708.02002",
+  use:"Pérdida alternativa para el desbalance fondo/filamento.",where:"Próximos pasos"},
+ {id:"salehi2017tversky",cat:"loss",type:"inproceedings",
+  authors:["Salehi, Seyed Sadegh Mohseni","Erdogmus, Deniz","Gholipour, Ali"],year:2017,
+  title:"Tversky Loss Function for Image Segmentation Using 3D Fully Convolutional Deep Networks",venue:"Machine Learning in Medical Imaging (MLMI)",
+  url:"https://arxiv.org/abs/1706.05721",arxiv:"1706.05721",
+  use:"Permite ponderar falsos negativos frente a falsos positivos.",where:"Próximos pasos"},
+ {id:"dice1945measures",cat:"loss",type:"article",
+  authors:["Dice, Lee R."],year:1945,title:"Measures of the Amount of Ecologic Association Between Species",
+  venue:"Ecology",vol:"26(3)",pages:"297–302",doi:"10.2307/1932409",url:"https://doi.org/10.2307/1932409",
+  use:"Origen del coeficiente de Dice usado como métrica principal.",where:"Secciones 8–9"},
+ {id:"jaccard1912distribution",cat:"loss",type:"article",
+  authors:["Jaccard, Paul"],year:1912,title:"The Distribution of the Flora in the Alpine Zone",
+  venue:"New Phytologist",vol:"11(2)",pages:"37–50",doi:"10.1111/j.1469-8137.1912.tb05611.x",url:"https://doi.org/10.1111/j.1469-8137.1912.tb05611.x",
+  use:"Índice de Jaccard (IoU), métrica secundaria.",where:"Secciones 8–9"},
+
+ // ---------- ENTRENAMIENTO ----------
+ {id:"kingma2015adam",cat:"train",type:"inproceedings",
+  authors:["Kingma, Diederik P.","Ba, Jimmy"],year:2015,title:"Adam: A Method for Stochastic Optimization",
+  venue:"International Conference on Learning Representations (ICLR)",url:"https://arxiv.org/abs/1412.6980",arxiv:"1412.6980",
+  use:"Optimizador del entrenamiento (lr = 5e-5) con ReduceLROnPlateau.",where:"Sección 8–9"},
+ {id:"micikevicius2018mixed",cat:"train",type:"inproceedings",
+  authors:["Micikevicius, Paulius","others"],year:2018,title:"Mixed Precision Training",
+  venue:"International Conference on Learning Representations (ICLR)",url:"https://arxiv.org/abs/1710.03740",arxiv:"1710.03740",
+  use:"Fundamento de la precisión mixta para ahorrar memoria en la GPU de Kaggle.",where:"Sección 9"},
+ {id:"paszke2019pytorch",cat:"train",type:"inproceedings",
+  authors:["Paszke, Adam","others"],year:2019,title:"PyTorch: An Imperative Style, High-Performance Deep Learning Library",
+  venue:"Advances in Neural Information Processing Systems (NeurIPS)",url:"https://arxiv.org/abs/1912.01703",arxiv:"1912.01703",
+  use:"Framework de deep learning del proyecto.",where:"Todo el notebook"},
+
+ // ---------- HERRAMIENTAS ----------
+ {id:"iakubovskii2019smp",cat:"tools",type:"misc",
+  authors:["Iakubovskii, Pavel"],year:2019,title:"Segmentation Models Pytorch",
+  venue:"Repositorio de GitHub",url:"https://github.com/qubvel/segmentation_models.pytorch",
+  use:"Implementa U-Net, encoders preentrenados y pérdidas (DiceLoss).",where:"Secciones 7–8"},
+ {id:"buslaev2020albumentations",cat:"tools",type:"article",
+  authors:["Buslaev, Alexander","Iglovikov, Vladimir I.","Khvedchenya, Eugene","Parinov, Alex","Druzhinin, Mikhail","Kalinin, Alexandr A."],year:2020,
+  title:"Albumentations: Fast and Flexible Image Augmentations",venue:"Information",vol:"11(2)",pages:"125",
+  doi:"10.3390/info11020125",url:"https://doi.org/10.3390/info11020125",
+  use:"Aumentos de datos aplicados de forma consistente a imagen y máscara.",where:"Sección 6"},
+ {id:"bradski2000opencv",cat:"tools",type:"article",
+  authors:["Bradski, Gary"],year:2000,title:"The OpenCV Library",venue:"Dr. Dobb's Journal of Software Tools",
+  url:"https://opencv.org",use:"Lectura de imágenes y rasterizado de polígonos a máscaras.",where:"Secciones 3–6"},
+ {id:"cocoapi",cat:"tools",type:"misc",
+  authors:["COCO Consortium"],year:2015,title:"COCO API (pycocotools)",venue:"Repositorio de GitHub",url:"https://github.com/cocodataset/cocoapi",
+  use:"Decodificación de segmentaciones RLE.",where:"Sección 3"},
+ {id:"harris2020numpy",cat:"tools",type:"article",
+  authors:["Harris, Charles R.","others"],year:2020,title:"Array programming with NumPy",venue:"Nature",vol:"585",pages:"357–362",
+  doi:"10.1038/s41586-020-2649-2",url:"https://doi.org/10.1038/s41586-020-2649-2",use:"Operaciones numéricas y manejo de máscaras.",where:"Todo el notebook"},
+ {id:"hunter2007matplotlib",cat:"tools",type:"article",
+  authors:["Hunter, John D."],year:2007,title:"Matplotlib: A 2D Graphics Environment",venue:"Computing in Science & Engineering",vol:"9(3)",pages:"90–95",
+  doi:"10.1109/MCSE.2007.55",url:"https://doi.org/10.1109/MCSE.2007.55",use:"Curvas de entrenamiento y visualización de predicciones.",where:"Secciones 4, 10–11"},
+ {id:"pedregosa2011sklearn",cat:"tools",type:"article",
+  authors:["Pedregosa, Fabian","others"],year:2011,title:"Scikit-learn: Machine Learning in Python",venue:"Journal of Machine Learning Research",vol:"12",pages:"2825–2830",
+  url:"https://jmlr.org/papers/v12/pedregosa11a.html",use:"División train/validación (train_test_split).",where:"Sección 5"}
+];
+
+// ---------- utilidades ----------
+const $ = s => document.querySelector(s);
+const esc = s => String(s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+
+function shortAuthor(a){
+  if(a === "others") return "et al.";
+  const [last, first] = a.split(", ");
+  if(!first) return a;
+  const ini = first.split(" ").map(p => p[0] + ".").join(" ");
+  return last + ", " + ini;
+}
+function authorsDisplay(list){
+  const hasOthers = list.includes("others");
+  const real = list.filter(a => a !== "others");
+  if(real.length > 4 || hasOthers && real.length > 1)
+    return real.slice(0,3).map(shortAuthor).join("; ") + "; et al.";
+  return real.map(shortAuthor).join("; ") + (hasOthers ? "; et al." : "");
+}
+function bibtex(r){
+  const au = r.authors.map(a => a === "others" ? "others" : a).join(" and ");
+  const f = [];
+  f.push(`  author = {${au}}`);
+  f.push(`  title = {${r.title}}`);
+  if(r.type === "article"){ f.push(`  journal = {${r.venue}}`); if(r.vol) f.push(`  volume = {${r.vol}}`); }
+  else if(r.type === "inproceedings"){ f.push(`  booktitle = {${r.venue}}`); }
+  else { f.push(`  howpublished = {${r.venue}}`); }
+  if(r.pages) f.push(`  pages = {${r.pages.replace("–","--")}}`);
+  f.push(`  year = {${r.year}}`);
+  if(r.doi) f.push(`  doi = {${r.doi}}`);
+  if(r.arxiv) f.push(`  eprint = {${r.arxiv}}`, `  archivePrefix = {arXiv}`);
+  if(r.url) f.push(`  url = {${r.url}}`);
+  return `@${r.type}{${r.id},\n${f.join(",\n")}\n}`;
+}
+function refHTML(r){
+  const meta = `${esc(authorsDisplay(r.authors))} (${r.year}). ${esc(r.venue)}${r.vol ? ", " + esc(r.vol) : ""}${r.pages ? ", pp. " + esc(r.pages) : ""}.`;
+  const links = [];
+  if(r.doi) links.push(`<a href="https://doi.org/${esc(r.doi)}" target="_blank" rel="noopener">DOI</a>`);
+  if(r.arxiv) links.push(`<a href="https://arxiv.org/abs/${esc(r.arxiv)}" target="_blank" rel="noopener">arXiv</a>`);
+  if(!r.doi && !r.arxiv && r.url) links.push(`<a href="${esc(r.url)}" target="_blank" rel="noopener">Enlace</a>`);
+  return `<article class="ref" id="${r.id}">
+    <div class="title">${esc(r.title)}</div>
+    <div class="meta">${meta}</div>
+    <div class="use"><span class="tag">${esc(r.where)}</span>${esc(r.use)}</div>
+    <div class="actions">${links.join("")}
+      <button data-act="bib">BibTeX</button>
+      <button data-act="copy">Copiar BibTeX</button>
+    </div>
+    <pre class="bib">${esc(bibtex(r))}</pre>
+  </article>`;
+}
+
+// ---------- estado y render ----------
+let activeCat = "all";
+function matches(r, q){
+  if(activeCat !== "all" && r.cat !== activeCat) return false;
+  if(!q) return true;
+  const hay = [r.title, r.authors.join(" "), r.venue, r.year, r.use, r.where].join(" ").toLowerCase();
+  return q.toLowerCase().split(/\s+/).every(t => hay.includes(t));
+}
+function render(){
+  const q = $("#q").value.trim();
+  const visible = REFS.filter(r => matches(r, q));
+  let html = "";
+  for(const key of Object.keys(CATS)){
+    const items = visible.filter(r => r.cat === key).sort((a,b) => a.year - b.year);
+    if(!items.length) continue;
+    html += `<div class="cat"><h3>${esc(CATS[key].name)} <small style="color:var(--muted);font-weight:400">(${items.length})</small></h3>
+             <p class="desc">${esc(CATS[key].desc)}</p>${items.map(refHTML).join("")}</div>`;
+  }
+  $("#list").innerHTML = html;
+  $("#empty").style.display = visible.length ? "none" : "block";
+  $("#count").textContent = `${visible.length} de ${REFS.length} referencias`;
+}
+function buildChips(){
+  const all = [["all","Todas"], ...Object.entries(CATS).map(([k,v]) => [k, v.name])];
+  $("#chips").innerHTML = all.map(([k,n]) =>
+    `<button class="chip" data-cat="${k}" aria-pressed="${k===activeCat}">${esc(n)}</button>`).join("");
+}
+function buildStats(){
+  const years = REFS.map(r => r.year);
+  const arx = REFS.filter(r => r.arxiv).length, doi = REFS.filter(r => r.doi).length;
+  const s = [[REFS.length,"referencias"],[Object.keys(CATS).length,"categorías"],[doi,"con DOI"],[arx,"con arXiv"]];
+  $("#stats").innerHTML = s.map(([n,l]) => `<div class="stat"><b>${n}</b><span>${l}</span></div>`).join("");
+}
+
+// ---------- eventos ----------
+async function copyText(text, btn){
+  try{ await navigator.clipboard.writeText(text); }
+  catch(e){ const t = document.createElement("textarea"); t.value = text; document.body.appendChild(t); t.select(); document.execCommand("copy"); t.remove(); }
+  if(btn){ const old = btn.textContent; btn.textContent = "¡Copiado!"; setTimeout(() => btn.textContent = old, 1200); }
+}
+$("#q").addEventListener("input", render);
+$("#chips").addEventListener("click", e => {
+  const b = e.target.closest(".chip"); if(!b) return;
+  activeCat = b.dataset.cat; buildChips(); render();
+});
+$("#list").addEventListener("click", e => {
+  const b = e.target.closest("button[data-act]"); if(!b) return;
+  const card = b.closest(".ref"); const r = REFS.find(x => x.id === card.id);
+  if(b.dataset.act === "bib") card.classList.toggle("open");
+  else copyText(bibtex(r), b);
+});
+const allBib = () => REFS.map(bibtex).join("\n\n") + "\n";
+$("#copyAll").addEventListener("click", e => copyText(allBib(), e.target));
+$("#dlAll").addEventListener("click", () => {
+  const url = URL.createObjectURL(new Blob([allBib()], {type:"text/x-bibtex"}));
+  const a = Object.assign(document.createElement("a"), {href:url, download:"referencias_filamentos.bib"});
+  a.click(); URL.revokeObjectURL(url);
+});
+$("#theme").addEventListener("click", () => {
+  const root = document.documentElement;
+  const dark = root.dataset.theme ? root.dataset.theme === "dark" : matchMedia("(prefers-color-scheme: dark)").matches;
+  root.dataset.theme = dark ? "light" : "dark";
+});
+
+buildStats(); buildChips(); render();
+</script>
+</body>
+</html>
